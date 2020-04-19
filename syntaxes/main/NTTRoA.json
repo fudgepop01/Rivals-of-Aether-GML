@@ -1,0 +1,117 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "fileTypes": ["gml"],
+	"name": "RoA NTT subset of Gamemaker Language 2",
+  "scopeName": "source.gml-ntt-roa",
+	"patterns": [
+      {
+         "match": "^///.*$",
+         "name": "comment.block.documentation.gml"
+      },
+      {
+         "match": "//.*$",
+         "name": "comment.line.double-slash.gml"
+      },
+      {
+         "begin": "/\\*",
+         "end": "\\*/",
+         "name": "comment.block.gml"
+      },
+      {
+        "match": "#\\b(region|endregion).*$",
+        "name": "comment.region.block.gml"
+      },
+      {
+         "begin": "\\'",
+         "end": "\\'",
+         "name": "string.quoted.single.gml"
+      },
+      {
+         "begin": "\\\"",
+         "end": "\\\"",
+         "name": "string.quoted.double.gml"
+      },
+      {
+         "match": "(?i)\\b(argument_relitive|argument_count|argument9|argument8|argument7|argument6|argument5|argument4|argument3|argument2|argument15|argument14|argument13|argument12|argument11|argument10|argument1|argument0|argument)\\b",
+         "name": "variable.parameter.gml"
+      },
+      {
+         "match": "\\b(\\$[0-9]*)\\b",
+         "name": "constant.numeric.hex.gml"
+      },
+      {
+         "match": "\\b([0-9]+[.][0-9]+)\\b",
+         "name": "constant.numeric.real.gml"
+      },
+      {
+         "match": "\\b([0-9]+)\\b",
+         "name": "constant.numeric.gml"
+      },
+      {
+         "match": "(?i)\\b(if|else|switch|case|default|break|for|repeat|while|do|until|continue|exit|return|with)\\b",
+         "name": "keyword.control.gml"
+      },
+      {
+         "match": "\\[\\#|\\[\\?|\\[@|\\[|\\]|\\-|\\+|\\||=|%|\\^|&|\\*|!|<|>|:|/",
+         "name": "keyword.operator.character.gml"
+      },
+      {
+         "match": "\\b(and|or|xor|not)\\b",
+         "name": "keyword.operator.word.gml"
+      },
+      {
+         "match": ";|,|\\(|\\)|\\{|\\}|\\.",
+         "name": "keyword.other.gml"
+      },
+      {
+         "match": "(?i)\\b(all|noone|true|false|undefined)\\b",
+         "name": "constant.language.gml"
+      },
+      {
+         "begin": "\\b(((global)?var)|(enum))\\b",
+         "beginCaptures": {
+           "1": {
+             "name": "storage.type.gml"
+           }
+         },
+         "end": "[a-zA-Z_]+",
+         "endCaptures": {
+            "0": {
+              "name": "variable.other.gml"
+            }
+         }
+      },
+      {
+         "match": "(?i)\\b(global|local|self|other)\\b",
+         "name": "varable.language.gml"
+      },
+      {
+         "match": "(?i)\\b((obj|scr|spr|rm)_\\w+)\\b",
+         "name": "variable.other.gml"
+      },
+      {
+        "match": "(?i)\\b((obj|scr|spr|rm)\\w+)\\b",
+        "name": "variable.other.gml"
+      },
+      {
+         "match": "(?i)\\b(script_execute|script_get_name|script_get_index|is_real|is_int32|is_int64|is_bool|is_number|is_string|is_array|is_object|abs|round|floor|ceil|sign|frac|sqrt|sqr|exp|ln|log2|log10|logn|sin|cos|tan|arcsin|arccos|arctan|arctan2|dsin|dcos|dtan|darcsin|darccos|darctan|darctan2|degtorad|radtodeg|min|max|clamp|lerp|dot_product|angle_difference|point_distance|point_direction|lengthdir_x|lengthdir_y|real|bool|string|string_format|chr|string_length|string_pos|string_count|string_copy|string_delete|string_char_at|string_ord_at|string_upper|string_lower|string_letters|string_digits|string_lettersdigits|string_replace|string_replace_all|array_create|array_clear|array_clone|array_slice|array_copy|array_length|array_equals|array_push|array_insert|array_find_index|array_find_index_ext|array_find_last_index|array_find_last_index_ext|array_sort|array_sort_sub|array_join|ds_list_create|ds_list_destroy|ds_list_valid|ds_list_clear|ds_list_size|ds_list_shuffle|ds_list_find_value|ds_list_set|ds_list_add|ds_list_add_array|ds_list_insert|ds_list_delete|ds_list_find_index|ds_list_remove|ds_list_join|ds_list_to_array|ds_map_create|ds_map_destroy|ds_map_valid|ds_map_clear|ds_map_size|ds_map_keys|ds_map_values|ds_map_find_value|ds_map_set|ds_map_exists|ds_map_delete|ds_grid_create|ds_grid_destroy|ds_grid_valid|ds_grid_clear|ds_grid_width|ds_grid_height|ds_grid_resize|ds_grid_get|ds_grid_set|ds_grid_set_region|ds_grid_sort|vertex_create_buffer|vertex_create_buffer_ext|vertex_delete_buffer|vertex_begin|vertex_float1|vertex_float2|vertex_float3|vertex_float4|vertex_color|vertex_colour|vertex_texcoord|vertex_position|vertex_position_3d|vertex_normal|vertex_argb|vertex_end|vertex_get_buffer_size|vertex_get_number|vertex_freeze|vertex_submit|vertex_format_begin|vertex_format_end|vertex_format_delete|vertex_format_add_color|vertex_format_add_colour|vertex_format_add_normal|vertex_format_add_position|vertex_format_add_position_3d|vertex_format_add_texcoord|vertex_format_add_custom|variable_instance_exists|variable_instance_get|variable_instance_set|variable_instance_get_names|sprite_add_base64|sprite_exists|sprite_get_name|sprite_get_number|sprite_get_width|sprite_get_height|sprite_get_xoffset|sprite_get_yoffset|sprite_get_bbox_mode|sprite_get_bbox_left|sprite_get_bbox_right|sprite_get_bbox_top|sprite_get_bbox_bottom|instance_find|instance_number|instance_exists|instance_position|instance_place|instance_nearest|instance_furthest|motion_set|motion_add|place_free|place_empty|place_meeting|place_snapped|move_random|move_snap|move_towards_point|move_contact_solid|move_contact_all|move_outside_solid|move_outside_all|move_bounce_solid|move_bounce_all|move_wrap|distance_to_point|distance_to_object|position_empty|position_meeting|mp_linear_step|mp_potential_step|mp_linear_step_object|mp_potential_step_object|collision_point|collision_rectangle|collision_circle|collision_ellipse|collision_line|draw_set_colour|draw_set_color|draw_set_alpha|draw_get_colour|draw_get_color|draw_get_alpha|merge_colour|make_colour_rgb|make_colour_hsv|colour_get_red|colour_get_green|colour_get_blue|colour_get_hue|colour_get_saturation|colour_get_value|merge_colour|make_color_rgb|make_color_hsv|color_get_red|color_get_green|color_get_blue|color_get_hue|color_get_saturation|color_get_value|merge_color|draw_set_font|draw_get_font|draw_set_halign|draw_get_halign|draw_set_valign|draw_get_valign|string_width|string_height|string_width_ext|string_height_ext|draw_text_transformed|draw_text_ext_transformed|draw_text_colour|draw_text_ext_colour|draw_text_transformed_colour|draw_text_ext_transformed_colour|draw_text_color|draw_text_ext_color|draw_text_transformed_color|draw_text_ext_transformed_color|draw_point_colour|draw_line_colour|draw_line_width_colour|draw_rectangle_colour|draw_roundrect_colour|draw_roundrect_colour_ext|draw_triangle_colour|draw_circle_colour|draw_ellipse_colour|draw_point_color|draw_line_color|draw_line_width_color|draw_rectangle_color|draw_roundrect_color|draw_roundrect_color_ext|draw_triangle_color|draw_circle_color|draw_ellipse_color|draw_primitive_begin|draw_vertex|draw_vertex_colour|draw_vertex_color|draw_primitive_end|sprite_get_uvs|font_get_uvs|sprite_get_texture|font_get_texture|texture_get_width|texture_get_height|texture_get_uvs|draw_primitive_begin_texture|draw_vertex_texture|draw_vertex_texture_colour|draw_vertex_texture_color|texture_global_scale|gpu_set_blendenable|gpu_set_ztestenable|gpu_set_zfunc|gpu_set_zwriteenable|gpu_set_fog|gpu_set_cullmode|gpu_set_blendmode|gpu_set_blendmode_ext|gpu_set_blendmode_ext_sepalpha|gpu_set_colorwriteenable|gpu_set_colourwriteenable|gpu_set_alphatestenable|gpu_set_alphatestref|gpu_set_alphatestfunc|gpu_set_texfilter|gpu_set_texfilter_ext|gpu_set_texrepeat|gpu_set_texrepeat_ext|gpu_set_tex_filter|gpu_set_tex_filter_ext|gpu_set_tex_repeat|gpu_set_tex_repeat_ext|gpu_set_tex_mip_filter|gpu_set_tex_mip_filter_ext|gpu_set_tex_mip_bias|gpu_set_tex_mip_bias_ext|gpu_set_tex_min_mip|gpu_set_tex_min_mip_ext|gpu_set_tex_max_mip|gpu_set_tex_max_mip_ext|gpu_set_tex_max_aniso|gpu_set_tex_max_aniso_ext|gpu_set_tex_mip_enable|gpu_set_tex_mip_enable_ext|gpu_get_blendenable|gpu_get_ztestenable|gpu_get_zfunc|gpu_get_zwriteenable|gpu_get_fog|gpu_get_cullmode|gpu_get_blendmode|gpu_get_blendmode_ext|gpu_get_blendmode_ext_sepalpha|gpu_get_blendmode_src|gpu_get_blendmode_dest|gpu_get_blendmode_srcalpha|gpu_get_blendmode_destalpha|gpu_get_colorwriteenable|gpu_get_colourwriteenable|gpu_get_alphatestenable|gpu_get_alphatestref|gpu_get_alphatestfunc|gpu_get_texfilter|gpu_get_texfilter_ext|gpu_get_texrepeat|gpu_get_texrepeat_ext|gpu_get_tex_filter|gpu_get_tex_filter_ext|gpu_get_tex_repeat|gpu_get_tex_repeat_ext|gpu_get_tex_mip_filter|gpu_get_tex_mip_filter_ext|gpu_get_tex_mip_bias|gpu_get_tex_mip_bias_ext|gpu_get_tex_min_mip|gpu_get_tex_min_mip_ext|gpu_get_tex_max_mip|gpu_get_tex_max_mip_ext|gpu_get_tex_max_aniso|gpu_get_tex_max_aniso_ext|gpu_get_tex_mip_enable|gpu_get_tex_mip_enable_ext|gpu_push_state|gpu_pop_state|draw_light_define_ambient|draw_light_define_direction|draw_light_define_point|draw_light_enable|draw_set_lighting|draw_light_get_ambient|draw_light_get|draw_get_lighting|draw_self|draw_sprite|draw_sprite_pos|draw_sprite_ext|draw_sprite_stretched|draw_sprite_stretched_ext|draw_sprite_tiled|draw_sprite_tiled_ext|draw_sprite_part|draw_sprite_part_ext|draw_sprite_general|trace|sprite_get|sound_get|sprite_change_offset|asset_get|instance_create|instance_destroy|sprite_change_collision_mask|tween)\\b",
+         "name": "support.function.gml"
+      },
+      {
+         "match": "(?i)\\b(get_attack_value|set_attack_value|reset_attack_value|get_window_value|set_window_value|reset_window_value|get_hitbox_value|set_hitbox_value|reset_hitbox_value|get_num_hitboxes|set_num_hitboxes|reset_num_hitboxes|destroy_hitboxes|get_hitbox_angle|create_hitbox|create_deathbox|set_num_palettes|set_color_profile_slot|set_color_profile_slot_range|ease_linear|ease_backIn|ease_backOut|ease_backInOut|ease_bounceIn|ease_bounceOut|ease_bouncInOut|ease_circIn|ease_circOut|ease_circInOut|ease_cubeIn|ease_cubeOut|ease_cubeInOut|ease_expoIn|ease_expoOut|ease_expoInOut|ease_quadIn|ease_quadOut|ease_quadInOut|ease_quartIn|ease_quartOut|ease_quartInOut|ease_sineIn|ease_sineOut|ease_sineInOut|asset_get|draw_debug_text|trigger_b_reverse|random_func|random_func2|attack_end|get_state_name|set_state|set_attack|iasa_script|clear_button_buffer|can_tap_jump|hit_fx_create|spawn_hit_fx|get_gameplay_time|get_game_timer|get_stage_data|set_victory_bg|get_instance_x|get_instance_y|get_instance_player|get_instance_player_id|get_training_cpu_action|get_player_team|set_player_team|get_player_stocks|set_player_stocks|get_player_color|get_player_damage|set_player_damage|take_damage|shader_start|shader_end|init_shader|sound_play|sound_stop|set_victory_theme|view_get_wview|view_get_hview|view_get_xview|view_get_yview)\\b",
+         "name": "support.function.gml"
+      },
+      {
+         "match": "(?i)\\b(self|other|all|noone|global|local|undefined|c_aqua|c_black|c_blue|c_dkgray|c_fuchsia|c_gray|c_green|c_lime|c_ltgray|c_maroon|c_navy|c_olive|c_purple|c_red|c_silver|c_teal|c_white|c_yellow|c_orange|fa_left|fa_center|fa_right|fa_top|fa_middle|fa_bottom|pr_pointlist|pr_linelist|pr_linestrip|pr_trianglelist|pr_trianglestrip|pr_trianglefan|bm_normal|bm_add|bm_max|bm_subtract|bm_zero|bm_one|bm_src_colour|bm_inv_src_colour|bm_src_color|bm_inv_src_color|bm_src_alpha|bm_inv_src_alpha|bm_dest_alpha|bm_inv_dest_alpha|bm_dest_colour|bm_inv_dest_colour|bm_dest_color|bm_inv_dest_color|bm_src_alpha_sat|tf_point|tf_linear|tf_anisotropic|mip_off|mip_on|mip_markedonly|cmpfunc_never|cmpfunc_less|cmpfunc_equal|cmpfunc_lessequal|cmpfunc_greater|cmpfunc_notequal|cmpfunc_greaterequal|cmpfunc_always|cull_noculling|cull_clockwise|cull_counterclockwise|lighttype_dir|lighttype_point|PS_WALK|PS_WALK_TURN|PS_DASH_START|PS_DASH|PS_DASH_STOP|PS_DASH_TURN|PS_WAVELAND|PS_AIR_DODGE|PS_PARRY_START|PS_PARRY|PS_ROLL_BACKWARD|PS_ROLL_FORWARD|PS_TECH_GROUND|PS_TECH_BACKWARD|PS_TECH_FORWARD|PS_WALL_TECH|PS_WRAPPED|PS_FROZEN|PS_IDLE|PS_IDLE_AIR|PS_CROUCH|PS_JUMPSQUAT|PS_FIRST_JUMP|PS_DOUBLE_JUMP|PS_WALL_JUMP|PS_LAND|PS_ATTACK_AIR|PS_ATTACK_GROUND|PS_LANDING_LAG|PS_HITSTUN|PS_HITSTUN_LAND|PS_TUMBLE|PS_PRATFALL|PS_PRATLAND|PS_SPAWN|PS_RESPAWN|PS_DEAD|SC_HITSTUN|SC_AIR_NEUTRAL|SC_AIR_COMMITTED|SC_GROUND_NEUTRAL|SC_GROUND_COMMITTED|AT_JAB|AT_DATTACK|AT_NSPECIAL|AT_FSPECIAL|AT_USPECIAL|AT_DSPECIAL|AT_FSTRONG|AT_USTRONG|AT_DSTRONG|AT_FTILT|AT_UTILT|AT_DTILT|AT_NAIR|AT_FAIR|AT_BAIR|AT_DAIR|AT_UAIR|AT_TAUNT|AT_NSPECIAL_2|AT_NSPECIAL_AIR|AT_FSPECIAL_2|AT_FSPECIAL_AIR|AT_USPECIAL_2|AT_USPECIAL_GROUND|AT_DSPECIAL_2|AT_DSPECIAL_AIR|AT_FSTRONG_2|AT_USTRONG_2|AT_DSTRONG_2|AT_FTHROW|AT_UTHROW|AT_DTHROW|AT_NTHROW|AT_TAUNT_2|AT_EXTRA_1|AT_EXTRA_2|AT_EXTRA_3|HG_PARENT_HITBOX|HG_HITBOX_TYPE|HG_WINDOW|HG_WINDOW_CREATION_FRAME|HG_LIFETIME|HG_HITBOX_X|HG_HITBOX_Y|HG_WIDTH|HG_HEIGHT|HG_SHAPE|HG_PRIORITY|HG_DAMAGE|HG_ANGLE|HG_BASE_KNOCKBACK|HG_KNOCKBACK_SCALING|HG_EFFECT|HG_BASE_HITPAUSE|HG_HITPAUSE_SCALING|HG_VISUAL_EFFECT|HG_VISUAL_EFFECT_X_OFFSET|HG_VISUAL_EFFECT_Y_OFFSET|HG_HIT_SFX|HG_ANGLE_FLIPPER|HG_EXTRA_HITPAUSE|HG_GROUNDEDNESS|HG_EXTRA_CAMERA_SHAKE|HG_IGNORES_PROJECTILES|HG_HIT_LOCKOUT|HG_EXTENDED_PARRY_STUN|HG_HITBOX_GROUP|HG_HITSTUN_MULTIPLIER|HG_DRIFT_MULTIPLIER|HG_SDI_MULTIPLIER|HG_TECHABLE|HG_FORCE_FLINCH|HG_FINAL_BASE_KNOCKBACK|HG_THROWS_ROCK|HG_PROJECTILE_SPRITE|HG_PROJECTILE_MASK|HG_PROJECTILE_ANIM_SPEED|HG_PROJECTILE_HSPEED|HG_PROJECTILE_VSPEED|HG_PROJECTILE_GRAVITY|HG_PROJECTILE_GROUND_FRICTION|HG_PROJECTILE_AIR_FRICTION|HG_PROJECTILE_WALL_BEHAVIOR|HG_PROJECTILE_GROUND_BEHAVIOR|HG_PROJECTILE_ENEMY_BEHAVIOR|HG_PROJECTILE_UNBASHABLE|HG_PROJECTILE_PARRY_STUN|HG_PROJECTILE_DOES_NOT_REFLECT|HG_PROJECTILE_IS_TRANSCENDENT|HG_PROJECTILE_DESTROY_EFFECT|AG_CATEGORY|AG_SPRITE|AG_AIR_SPRITE|AG_HURTBOX_SPRITE|AG_HURTBOX_AIR_SPRITE|AG_NUM_WINDOWS|AG_HAS_LANDING_LAG|AG_OFF_LEDGE|AG_LANDING_LAG|AG_STRONG_CHARGE_WINDOW|AG_USES_CUSTOM_GRAVITY|AG_WINDOW_TYPE|AG_WINDOW_LENGTH|AG_WINDOW_ANIM_FRAMES|AG_WINDOW_ANIM_FRAME_START|AG_WINDOW_HSPEED|AG_WINDOW_VSPEED|AG_WINDOW_HSPEED_TYPE|AG_WINDOW_VSPEED_TYPE|AG_WINDOW_HAS_CUSTOM_FRICTION|AG_WINDOW_CUSTOM_AIR_FRICTION|AG_WINDOW_CUSTOM_GROUND_FRICTION|AG_WINDOW_CUSTOM_GRAVITY|AG_WINDOW_HAS_WHIFFLAG|AG_WINDOW_INVINCIBILITY|AG_WINDOW_HITPAUSE_FRAME|AG_WINDOW_CANCEL_TYPE|AG_WINDOW_CANCEL_FRAME|AG_WINDOW_HAS_SFX|AG_WINDOW_SFX|AG_WINDOW_SFX_FRAME)\\b",
+         "name": "constant.language.gml"
+      },
+      {
+         "match": "(?i)\\b(url|player|state|state_timer|state_cat|prev_state|attack|window|window_timer|spr_dir|spr_angle|free|hsp|vsp|joy_pad_idle|joy_dir|input_name-pressed|input_name-down|direction-hard_pressed|was_parried|can_move|can_jump|can_attack|can_strong|can_ustrong|can_special|can_shield|can_wall_jump|has_walljump|has_airdodge|can_fast_fall|djumps|max_djumps|off_edge|super_armor|soft_armor|invincible|invince_time|hitpause|hitstop|hitstop_full|has_hit|has_hit_player|can_wall_cling|clinging|grav|strong_charge|move_cooldown|hit_player_obj|last_attack|last_hbox_num|old_hsp|old_vsp|marked|wrapped|wrapped_player|burned|burnt_id|burn_timer|bubbled|bubbled_id|bubble_time|poison|stuck|stuck_id|clone|clones_player_id|draw_indicator|old_jump|outline_color|hurtbox_spr|crouchbox_spr|air_hurtbox_spr|hitstun_hurtbox_spr|knockback_adj|walk_speed|walk_accel|walk_turn_time|initial_dash_time|initial_dash_speed|dash_speed|dash_turn_time|dash_turn_accel|dash_stop_time|dash_stop_percent|ground_friction|moonwalk_accel|max_djumps|jump_start_time|jump_speed|short_hop_speed|djump_speed|jump_change|djump_accel|djump_accel_start_time|djump_accel_end_time|leave_ground_max|air_max_speed|max_jump_hsp|air_accel|air_friction|double_jump_time|gravity_speed|hitstun_grav|max_fall|fast_fall|land_time|prat_land_time|prat_fall_accel|walljump_hsp|walljump_vsp|walljump_time|roll_forward_max|roll_backward_max|wave_land_time|wave_land_adj|wave_friction|techroll_speed|air_dodge_speed|char_height|bubble_x|bubble_y|wall_frames|dodge_startup_frames|dodge_active_frames|dodge_recovery_frames|tech_active_frames|tech_recovery_frames|techroll_startup_frames|techroll_active_frames|techroll_recovery_frames|air_dodge_startup_frames|air_dodge_active_frames|air_dodge_recovery_frames|roll_forward_startup_frames|roll_forward_active_frames|roll_forward_recovery_frames|roll_back_startup_frames|roll_back_active_frames|roll_back_recovery_frames|idle_anim_speed|walk_anim_speed|dash_anim_speed|pratfall_anim_speed|land_sound|waveland_sound|jump_sound|djump_sound|air_dodge_sound|landing_lag_sound|player_id|player|orig_player|attack|hbox_num|hitbox_timer|destroyed|was_parried|in_hitpause|proj_angle|through_platforms|free)\\b",
+         "name": "support.variable.local.gml"
+      },
+      {
+         "match": "(?i)\\b(working_directory|webgl_enabled|view_yview|view_yport|view_xview|view_xport|view_wview|view_wport|view_vspeed|view_visible|view_vborder|view_surface_id|view_object|view_hview|view_hspeed|view_hport|view_hborder|view_enabled|view_current|view_angle|undefined|transition_steps|transition_kind|transition_color|temp_directory|show_score|show_lives|show_health|secure_mode|score|room_width|room_speed|room_persistent|room_last|room_height|room_first|room_caption|room|pointer_null|pointer_invalid|os_version|os_type|os_device|os_browser|mouse_y|mouse_x|mouse_lastbutton|mouse_button|lives|keyboard_string|keyboard_lastkey|keyboard_lastchar|keyboard_key|instance_id|instance_count|iap_data|health|gamemaker_version|gamemaker_registered|gamemaker_pro|game_save_id|game_project_name|game_id|game_display_name|fps_real|fps|event_type|event_object|event_number|event_action|error_occurred|error_last|display_aa|delta_time|debug_mode|cursor_sprite|current_year|current_weekday|current_time|current_second|current_month|current_minute|current_hour|current_day|caption_score|caption_lives|caption_health|browser_width|browser_height|background_yscale|background_y|background_xscale|background_x|background_width|background_vtiled|background_vspeed|background_visible|background_showcolour|background_showcolor|background_index|background_htiled|background_hspeed|background_height|background_foreground|background_colour|background_color|background_blend|background_alpha|async_load|application_surface)\\b",
+         "name": "support.variable.global.gml"
+      }
+   ]
+}

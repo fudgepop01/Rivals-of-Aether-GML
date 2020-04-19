@@ -1,0 +1,61 @@
+{
+	"name": "rivals-of-aether-gml-support",
+	"displayName": "rivals of aether gml support",
+	"description": "a language server for making mods with Rivals of Aether's subset of GML available to modders",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.44.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onLanguage:gml-ntt-roa"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"languages": [
+			{
+				"id": "gml-ntt-roa",
+				"aliases": [
+					"NTT RoA",
+					"RoA",
+					"Rivals of Aether"
+				],
+				"extensions": [
+					".gml"
+				],
+				"configuration": "./data/gml-configuration.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "gml-ntt-roa",
+				"scopeName": "source.gml-ntt-roa",
+				"path": "./syntaxes/main/NTTRoA.json"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.1",
+		"@types/mocha": "^5.2.7",
+		"@types/node": "^12.11.7",
+		"@types/vscode": "^1.44.0",
+		"glob": "^7.1.5",
+		"mocha": "^6.2.2",
+		"typescript": "^3.6.4",
+		"tslint": "^5.20.0",
+		"vscode-test": "^1.2.2"
+	},
+	"dependencies": {
+		"vscode-languageserver": "^6.1.1",
+		"vscode-nls": "^4.1.2"
+	}
+}
