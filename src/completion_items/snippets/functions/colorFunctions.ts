@@ -25,5 +25,47 @@ export default (): CompletionItem[] => {
       insertText: 'set_color_profile_slot_range( ${1:color_slot/real}, ${2:H/real}, ${3:S/real}, ${4:V/real} )',
       insertTextFormat: InsertTextFormat.Snippet
     },
+    {
+      label: 'set_character_color_slot',
+      kind: CompletionItemKind.Function,
+      documentation: '',
+      insertText: 'set_character_color_slot( ${1:shade_slot/real}, ${2:r/real}, ${3:g/real}, ${4:b/real}, ${5:a/real?} )',
+      insertTextFormat: InsertTextFormat.Snippet
+    },
+    {
+      label: 'set_article_color_slot',
+      kind: CompletionItemKind.Function,
+      documentation: '',
+      insertText: 'set_article_color_slot( ${1:shade_slot/real}, ${2:r/real}, ${3:g/real}, ${4:b/real}, ${5:a/real?} )',
+      insertTextFormat: InsertTextFormat.Snippet
+    },
+    {
+      label: 'set_character_color_shading',
+      kind: CompletionItemKind.Function,
+      documentation: '',
+      insertText: 'set_character_color_shading( ${1:shade_slot/real}, ${2:shading_value} )',
+      insertTextFormat: InsertTextFormat.Snippet
+    },
+    {
+      label: 'get_color_profile_slot_r',
+      kind: CompletionItemKind.Function,
+      documentation: '',
+      insertText: 'get_color_profile_slot_r( ${1:color_slot/real}, ${2:shade_slot/real} )',
+      insertTextFormat: InsertTextFormat.Snippet
+    },
+    {
+      label: 'get_color_profile_slot_g',
+      kind: CompletionItemKind.Function,
+      documentation: '',
+      insertText: 'get_color_profile_slot_g( ${1:color_slot/real}, ${2:shade_slot/real} )',
+      insertTextFormat: InsertTextFormat.Snippet
+    },
+    {
+      label: 'get_color_profile_slot_b',
+      kind: CompletionItemKind.Function,
+      documentation: '',
+      insertText: 'get_color_profile_slot_b( ${1:color_slot/real}, ${2:shade_slot/real} )',
+      insertTextFormat: InsertTextFormat.Snippet
+    },
   ]
 }

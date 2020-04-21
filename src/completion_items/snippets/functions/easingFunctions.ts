@@ -15,21 +15,21 @@ export default (): CompletionItem[] => {
       label: 'ease_backIn',
       kind: CompletionItemKind.Function,
       documentation: '',
-      insertText: 'ease_backIn( ${1:start}, ${2:end}, ${3:current_time}, ${4:total_time} )',
+      insertText: 'ease_backIn( ${1:start}, ${2:end}, ${3:current_time}, ${4:total_time}, ${5:overshoot} )',
       insertTextFormat: InsertTextFormat.Snippet
     },
     {
       label: 'ease_backOut',
       kind: CompletionItemKind.Function,
       documentation: '',
-      insertText: 'ease_backOut( ${1:start}, ${2:end}, ${3:current_time}, ${4:total_time} )',
+      insertText: 'ease_backOut( ${1:start}, ${2:end}, ${3:current_time}, ${4:total_time}, ${5:overshoot} )',
       insertTextFormat: InsertTextFormat.Snippet
     },
     {
       label: 'ease_backInOut',
       kind: CompletionItemKind.Function,
       documentation: '',
-      insertText: 'ease_backInOut( ${1:start}, ${2:end}, ${3:current_time}, ${4:total_time} )',
+      insertText: 'ease_backInOut( ${1:start}, ${2:end}, ${3:current_time}, ${4:total_time}, ${5:overshoot} )',
       insertTextFormat: InsertTextFormat.Snippet
     },
     {

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width,initial-scale=1'>
+
+	<title>Svelte app</title>
+
+	<link rel='stylesheet' href='{{GLOBAL}}'>
+	<link rel='stylesheet' href='{{CSS_BUNDLE}}'>
+
+	<script>
+		window['audio_builtins'] = ['{{AUDIO_FILES}}'];
+		window['sprite_builtins'] = {};
+
+		['{{SPRITE_FILES}}'].forEach(path => {
+			const name = (path.includes('\\')) ? path.substring(path.lastIndexOf('\\') + 1) : path.substring(path.lastIndexOf('/') + 1);
+
+			const imgElement = document.createElement('img');
+
+			imgElement.src = path;
+			window['sprite_builtins'][name] = imgElement;
+		});
+
+
+		(function() {
+			const vscode = acquireVsCodeApi();
+
+			window['playSound'] = (soundPath) => {
+				vscode.postMessage({
+					command: 'playSound',
+					sound: soundPath
+				})
+			}
+			window['fetchFromWsRoot'] = () => {
+				vscode.postMessage({
+					command: 'fetchFromWsRoot'
+				})
+			}
+
+			window['user_sprites'] = {};
+			window['user_sounds'] = {};
+
+			window.addEventListener('message', ({ data }) => {
+				switch (data.command) {
+					case 'openFile': {
+						const b64f = data.file;
+						const f = {...b64f, content: atob(b64f.content)}
+						if (f.name.endsWith('init.gml')) window['init_source'].set(f.content);
+						else if (f.name.endsWith('load.gml')) window['load_source'].set(f.content);
+						else {
+							window['current_frame'].set(0);
+							window['selected_window'].set(0);
+							window['move_source'].set(f.content);
+						}
+						break;
+					}
+					case 'get_sprites': {
+						let out = {};
+						for (const spr of data.spritePaths) {
+							const name = (spr.includes('\\')) ? spr.substring(spr.lastIndexOf('\\') + 1) : spr.substring(spr.lastIndexOf('/') + 1);
+							const imgElement = document.createElement('img');
+
+							imgElement.src = spr;
+							out[name] = imgElement;
+						}
+						window['sprite_sources'].set(out);
+						break;
+					}
+					case 'get_sounds': {
+						let out = {}
+						for (const snd of data.soundPaths) {
+							const name = (snd.includes('\\')) ? snd.substring(snd.lastIndexOf('\\') + 1) : snd.substring(snd.lastIndexOf('/') + 1);
+							out[name] = snd;
+						}
+						window['sound_sources'].set(out);
+						break;
+					}
+				}
+			})
+		})()
+	</script>
+
+	<script defer src='{{JS_BUNDLE}}'></script>
+</head>
+
+<body>
+</body>
+</html>
