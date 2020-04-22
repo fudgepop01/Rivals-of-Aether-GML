@@ -1,5 +1,7 @@
 .vscode/**
 .vscode-test/**
+.git/**
+node_modules/**
 out/test/**
 src/**
 webview/**
@@ -9,5 +11,11 @@ vsc-extension-quickstart.md
 **/tslint.json
 **/*.map
 **/*.ts
+**/*.vsix
 
-!webview/public/**
+!webview/public/global.css
+!webview/public/index.html
+!webview/public/build/bundle.js
+!webview/public/build/bundle.css
+!webview/public/resources/images/**
+

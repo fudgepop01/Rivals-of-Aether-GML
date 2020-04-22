@@ -2,7 +2,7 @@
 	"name": "rivals-of-aether-gml-support",
 	"displayName": "rivals of aether gml support",
 	"description": "a language server for making mods with Rivals of Aether's subset of GML available to modders",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"publisher": "fudgepops",
 	"repository": {
 		"url": "https://github.com/fudgepop01/Rivals-of-Aether-GML"

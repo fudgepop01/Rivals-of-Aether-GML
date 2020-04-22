@@ -46,14 +46,15 @@ export default class RoABoxController implements vscode.Disposable {
       .replace('{{GLOBAL}}', '' + panel.webview.asWebviewUri(vscode.Uri.file(joinPath(context.extensionPath, 'webview', 'public', 'global.css'))))
       .replace('{{CSS_BUNDLE}}', '' + panel.webview.asWebviewUri(vscode.Uri.file(joinPath(context.extensionPath, 'webview', 'public', 'build', 'bundle.css'))))
       .replace('{{JS_BUNDLE}}', '' + panel.webview.asWebviewUri(vscode.Uri.file(joinPath(context.extensionPath, 'webview', 'public', 'build', 'bundle.js'))))
-      .replace(`'{{AUDIO_FILES}}'`, () => {
-        const audioBuiltins = readdirSync(joinPath(context.extensionPath, 'webview', 'public', 'resources', 'sounds'));
-        let out = '';
-        for (const audioFile of audioBuiltins) {
-          out += `'${vscode.Uri.file(joinPath(context.extensionPath, 'webview', 'public', 'resources', 'sounds', audioFile)).fsPath.replace(/\\/g, '\\\\')}', `;
-        }
-        return out;
-      })
+      // bundling audio raises the package size by 49mb so uhh that's not happening (and is probably a bad idea anyway...)
+      // .replace(`'{{AUDIO_FILES}}'`, () => {
+      //   const audioBuiltins = readdirSync(joinPath(context.extensionPath, 'webview', 'public', 'resources', 'sounds'));
+      //   let out = '';
+      //   for (const audioFile of audioBuiltins) {
+      //     out += `'${vscode.Uri.file(joinPath(context.extensionPath, 'webview', 'public', 'resources', 'sounds', audioFile)).fsPath.replace(/\\/g, '\\\\')}', `;
+      //   }
+      //   return out;
+      // })
       .replace(`'{{SPRITE_FILES}}'`, () => {
         const spriteBuiltins = readdirSync(joinPath(context.extensionPath, 'webview', 'public', 'resources', 'images'));
         let out = '';

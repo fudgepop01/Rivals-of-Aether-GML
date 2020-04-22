@@ -10,8 +10,15 @@
 	<link rel='stylesheet' href='{{CSS_BUNDLE}}'>
 
 	<script>
-		window['audio_builtins'] = ['{{AUDIO_FILES}}'];
 		window['sprite_builtins'] = {};
+		window['audio_builtins'] = {};
+
+		// bundling all the audio into the extension takes up around 46mb so RIP that LMAO
+		// ['{{AUDIO_FILES}}'].forEach(path => {
+		// 	const name = (path.includes('\\')) ? path.substring(path.lastIndexOf('\\') + 1) : path.substring(path.lastIndexOf('/') + 1);
+
+		// 	window['audio_builtins'][name] = path;
+		// })
 
 		['{{SPRITE_FILES}}'].forEach(path => {
 			const name = (path.includes('\\')) ? path.substring(path.lastIndexOf('\\') + 1) : path.substring(path.lastIndexOf('/') + 1);

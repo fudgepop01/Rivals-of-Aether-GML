@@ -81,7 +81,7 @@
 </div>
 
 <script>
-  import { spriteData } from '../../store/user_data_store.js';
+  import { spriteData, soundSources } from '../../store/user_data_store.js';
   import { currentFrame } from '../../store/windows_editor.js';
   import { timeline } from '../../store/gameState_editor.js';
   import { onMount, onDestroy } from 'svelte';
@@ -109,7 +109,10 @@
     imageOffsets = {x: imgObj.xoff, y: imgObj.yoff};
     imageIdx = frameData.spriteFrame(imageFrameCount);
     singleFrameWidth = imageData.width / imgObj.frameCount;
-
+    // if (frameData.sfx) {
+    //   if ($soundSources[frameData.sfx]) window['playSound']($soundSources[frameData.sfx])
+    //   else if (window['audio_builtins'][frameData.sfx]) window['playSound'](window['audio_builtins'][frameData.sfx])
+    // }
   }
 
   const resizeTracker = () => {

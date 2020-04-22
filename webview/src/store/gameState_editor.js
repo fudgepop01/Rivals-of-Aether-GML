@@ -12,8 +12,7 @@ const calcFrames = (data) => {
   }
   const getSound = (fullSfx) => {
     if (fullSfx === undefined) return undefined;
-    const subStart = (fullSfx.startsWith('asset_get')) ? 11 : 10;
-    return fullSfx.substring(subStart, fullSfx.length - 2);
+    return fullSfx.substring(11, fullSfx.length - 2);
   }
 
   console.log(data);
