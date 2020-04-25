@@ -1,7 +1,6 @@
 .vscode/**
 .vscode-test/**
 .git/**
-node_modules/**
 out/test/**
 src/**
 webview/**

@@ -260,7 +260,7 @@ const constants = {
 
 export default constants;
 export const reverseLookup = (prefix, value) => {
-  for (const [key, v] of Object.entries(value)) {
+  for (const [key, v] of Object.entries(constants)) {
     if (v === value && key.startsWith(prefix)) return key;
   }
   return null;

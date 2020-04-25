@@ -23,8 +23,18 @@ const calcFrames = (data) => {
       winNum: hb.HG_WINDOW || 0,
       winFrame: hb.HG_WINDOW_CREATION_FRAME || 0,
       get parentHitbox() {
-        if (hb.HG_PARENT_HITBOX === 0) return null;
-        else return hitboxGenerators[hb.HG_PARENT_HITBOX - 1](this._myFrame);
+        if (hb.HG_PARENT_HITBOX === 0) return false;
+        if (this._parentIndex - 1 === this._idx) return false;
+        else return {
+          ...hitboxGenerators[hb.HG_PARENT_HITBOX - 1],
+          _myFrame: this._myFrame,
+          winNum: this.winNum,
+          winFrame: this.winFrame,
+          lifetime: this.lifetime,
+          xPos: this.xPos,
+          yPos: this.yPos,
+          group: this.group
+        };
       },
       xPos: hb.HG_HITBOX_X || 0,
       yPos: hb.HG_HITBOX_Y || 0,
@@ -33,6 +43,7 @@ const calcFrames = (data) => {
       shape: hb.HG_SHAPE || 0,
       damage: hb.HG_DAMAGE || 0,
       angle: hb.HG_ANGLE || 0,
+      get angleRad() { return this.angle * (Math.PI / 180) },
       get knockback() {
         if (hb.HG_FINAL_BASE_KNOCKBACK) {
           return (this._myFrame / this.lifetime) * (hb.HG_FINAL_BASE_KNOCKBACK - hb.HG_BASE_KNOCKBACK) + hb.HG_BASE_KNOCKBACK;
@@ -46,7 +57,8 @@ const calcFrames = (data) => {
       angleFlip: hb.HG_ANGLE_FLIPPER || 0,
       group: hb.HG_HITBOX_GROUP || 0,
       _myFrame: 0,
-      _idx: idx
+      _idx: idx,
+      _parentIndex: hb.HG_PARENT_HITBOX
     }
   });
   const activeHitboxes = [];

@@ -4,6 +4,7 @@
 	import getData from './util/emulation/extractData';
 	import Timeline from './components/timeline_editor/Timeline.svelte';
 	import Renderer from './components/renderer_editor/Renderer.svelte';
+	import Controller from './components/controller/Controller.svelte'
 
 	const fetchFromWsRoot = () => {
 		window['fetchFromWsRoot']();
@@ -31,6 +32,9 @@
 		<div id="render-container">
 			<Renderer></Renderer>
 		</div>
+		<div id="control-container">
+			<Controller></Controller>
+		</div>
 	{:else}
 		<h1>Welcome to RoABox!*</h1>
 
@@ -49,7 +53,7 @@
 		</ul>
 
 		<p>*this is a very early working <em>visualizer</em> - editing might come later</p>
-		<!-- <button on:click={fetchFromWsRoot}>fetch from workspace root</button> -->
+		<button on:click={fetchFromWsRoot}>fetch from workspace root</button>
 	{/if}
 </main>
 
@@ -94,6 +98,16 @@
 		width: calc(100% - 100px);
 		margin-top: 100px;
 		height: 500px;
+	}
+
+	#control-container {
+		position: absolute;
+		left: 0;
+		right: 0;
+		margin: auto;
+		width: calc(100% - 100px);
+		margin-top: 600px;
+		height: 200px;
 	}
 
 	@media (min-width: 400px) {

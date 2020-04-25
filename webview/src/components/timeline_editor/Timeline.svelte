@@ -68,7 +68,7 @@
       style="width: {timelineScale * $frameCount}px;"
     >
       {#each new Array($frameCount).fill(0) as _, i}
-        <div class="indicator {i === $currentFrame ? 'cur' : ''}">
+        <div class="indicator {i === $currentFrame ? 'cur' : ''}" on:wheel={handleZoom}>
           <div class="selector"
             style="{i === $currentFrame ? 'background-color: #D00;' : ''}"
             on:click={() => currentFrame.set(i) }
@@ -78,7 +78,8 @@
             <div class="bar bar-r"></div>
           {/if}
           <div class="current"
-            style="background-color: {i === $currentFrame ? '#AAA' : 'transparent'};"
+            style="{i === $currentFrame ? 'background-color: #AAA;' : ''}"
+            on:click={() => currentFrame.set(i) }
           ></div>
         </div>
       {/each}
@@ -286,7 +287,7 @@
     overflow: visible;
   }
 
-  .frame-indicators .indicator { position: relative; flex: 1; }
+  .frame-indicators .indicator { position: relative; flex: 1; height: 55px}
   .frame-indicators .indicator.cur { height: 55px; pointer-events: none }
   .frame-indicators .indicator .bar {
     position: absolute;
@@ -312,7 +313,7 @@
     isolation: isolate;
   }
 
-  .frame-indicators .indicator .selector:hover {
+  .frame-indicators .indicator:hover .selector {
     height: 10px;
     margin-top: -2px;
     background-color: #f88;
@@ -326,7 +327,10 @@
     width: 100%;
     height: calc(100% - 12px);
     mix-blend-mode: multiply;
-    pointer-events: none;
+  }
+
+  .frame-indicators .indicator:hover .current {
+    background-color: #AAA;
   }
 
 </style>

@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as PlaySound from 'play-sound';
 import { join as joinPath } from 'path';
 import { execFile } from 'child_process';
-import { readFileSync, writeFileSync, readdirSync } from 'fs';
+import { readFileSync, readdirSync } from 'fs';
 
 const namespace = 'roa-helper';
 
@@ -125,15 +125,19 @@ export default class RoABoxController implements vscode.Disposable {
 
   public fetchFromWsRoot() {
     const folderPath = vscode.workspace.workspaceFolders![0];
-    const sounds = vscode.Uri.file(joinPath(folderPath.uri.fsPath, 'sounds'));
-    const sprites = vscode.Uri.file(joinPath(folderPath.uri.fsPath, 'sprites'));
-    const init = vscode.Uri.file(joinPath(folderPath.uri.fsPath, 'scripts', 'init.gml'));
-    const load = vscode.Uri.file(joinPath(folderPath.uri.fsPath, 'scripts', 'load.gml'));
+    try {
+      const sounds = vscode.Uri.file(joinPath(folderPath.uri.fsPath, 'sounds'));
+      const sprites = vscode.Uri.file(joinPath(folderPath.uri.fsPath, 'sprites'));
+      const init = vscode.Uri.file(joinPath(folderPath.uri.fsPath, 'scripts', 'init.gml'));
+      const load = vscode.Uri.file(joinPath(folderPath.uri.fsPath, 'scripts', 'load.gml'));
 
-    this.sendFolderToRoABox(sounds);
-    this.sendFolderToRoABox(sprites);
-    this.openInRoABox(init);
-    this.openInRoABox(load);
+      this.sendFolderToRoABox(sounds);
+      this.sendFolderToRoABox(sprites);
+      this.openInRoABox(init);
+      this.openInRoABox(load);
+    } catch(e) {
+      vscode.window.showErrorMessage("failed to auto-fetch resources - are you in the right type of workspace?");
+    }
   }
 
   public playSound(soundPath: string) {
