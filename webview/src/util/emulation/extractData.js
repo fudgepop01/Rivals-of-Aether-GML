@@ -1,10 +1,11 @@
 import { get } from 'svelte/store';
 
-import { currentFrame } from '../../store/windows';
+import { currentFrame, selectedWindow } from '../../store/windows_editor';
 import getNewBase from './gameStateBase';
 import GS, { timeline as TL, setCompiled } from '../../store/gameState.js';
 import { timeline as TLSimple } from '../../store/gameState_editor.js';
 import { spriteData } from '../../store/user_data_store.js';
+import { debugTypes } from '../../store/renderOptions';
 import getData from './instructions';
 import { animationNames } from './constantLookup';
 
@@ -36,7 +37,8 @@ const initialize = (compiled, gameState) => {
   const initOrder = [
     'init',
     'load',
-    'move'
+    'move',
+    'debug'
   ];
 
   for (const scriptName of initOrder) {
@@ -53,6 +55,9 @@ export default async (mode) => {
     new gmlive.source(`_move.gml`, get(window['move_source']))
   ];
 
+  let debugSrc = get(window['debug_source']);
+  if (debugSrc.length > 0) sources.push(new gmlive.source('_debug.gml', debugSrc));
+
   const compiled = gmlive.compile(sources);
   setCompiled(compiled);
 
@@ -61,9 +66,38 @@ export default async (mode) => {
   initialize(compiled, gameState);
 
   if (mode === 'moveEditor') {
-    TLSimple.recalculateFrames(Object.values(gameState.instances.self.attacks)[0].modified);
+    currentFrame.set(0);
+    selectedWindow.set(0);
+    // preprocess for debugging script
+    const DEBUG_TYPES = gameState.instances.self.fields['DEBUG_TYPES'];
+    if (DEBUG_TYPES) {
+      debugTypes.set(DEBUG_TYPES.split(','));
+      const windows = Object.values(gameState.instances.self.attacks)[0].modified.windows;
+
+      const outWindows = {};
+      let currentWin = 1;
+      for (const entry of gameState.instances.self.fields['WINDOW_SEQUENCE'].split(',')) {
+        const matchData = entry.match(/(?<window>\d+)(?:x(?<repeater>\d+))?/);
+        if (matchData.groups.repeater) {
+          for (let i = 0; i < parseInt(matchData.groups.repeater); i++) {
+            outWindows[currentWin] = {_name: matchData.groups.window, ...windows[parseInt(matchData.groups.window)]};
+            currentWin++;
+          }
+        } else {
+          outWindows[currentWin] = {_name: matchData.groups.window, ...windows[parseInt(matchData.groups.window)]};
+          currentWin++;
+        }
+      }
+      Object.values(gameState.instances.self.attacks)[0].modified.windows = outWindows;
+    } else {
+      debugTypes.set([]);
+    }
+
+    // actually generate the output
+    const out = {...Object.values(gameState.instances.self.attacks)[0].modified, vars: gameState.instances.self.fields};
+    TLSimple.recalculateFrames(out);
     spriteData.set(gameState.resources);
-    return Object.values(gameState.instances.self.attacks)[0].modified;
+    return out;
   } else {
     GS.set(gameState);
 

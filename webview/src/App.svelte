@@ -1,6 +1,6 @@
 <script>
 	import { onMount, beforeUpdate } from 'svelte';
-	import { moveSource, initSource, loadSource, soundSources, spriteSources } from './store/user_data_store'
+	import { moveSource, debugSource, initSource, loadSource, soundSources, spriteSources } from './store/user_data_store'
 	import getData from './util/emulation/extractData';
 	import Timeline from './components/timeline_editor/Timeline.svelte';
 	import Renderer from './components/renderer_editor/Renderer.svelte';
@@ -12,6 +12,10 @@
 
 	let isSetup = false;
 	$: {
+		// force an update when either of these are set
+		$moveSource,
+		$debugSource,
+
 		isSetup = !$spriteSources.empty
 			&& !$soundSources.empty
 			&& $initSource.length !== 0
@@ -52,7 +56,7 @@
 			<li class={$moveSource.length === 0 ? 'incomplete' : 'complete'}>the gml file of whatever attack you wish to view</li>
 		</ul>
 
-		<p>*this is a very early working <em>visualizer</em> - editing might come later</p>
+		<p>*this is currently a <em>visualizer</em> - editing might come later</p>
 		<button on:click={fetchFromWsRoot}>fetch from workspace root</button>
 	{/if}
 </main>

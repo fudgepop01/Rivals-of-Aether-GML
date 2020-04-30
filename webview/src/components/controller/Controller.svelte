@@ -16,14 +16,32 @@
       <label>guideline duration (in frames)</label>
       <input type="number" bind:value={$guidelineLength} step="1" >
     </div>
+    <div class="check-group">
+      <label>show hurtbox?</label>
+      <input type="checkbox" bind:checked={$showHurtbox} >
+    </div>
+    <div class="input-group">
+      <label>hurtbox opacity</label>
+      <input type="number" bind:value={$hurtboxOpacity} step="0.05" max="1" min="0" >
+    </div>
     <div class="input-group">
       <button on:click={() => selectedHitbox.set({_idx: -1})}>clear hitbox selection</button>
     </div>
+    {#if $debugTypes.length > 0}
+      <div class="input-group">
+        <label>debug mode</label>
+        <select bind:value={$debugTypeIndex} on:change={refreshTimeline}>
+          {#each $debugTypes as mode, i}
+            <option value={i}>{mode}</option>
+          {/each}
+        </select>
+      </div>
+    {/if}
   </div>
   <div id="attributes">
     <div class="input-group">
       <label>target character</label>
-      <select label="target character" bind:this={charSelect} on:change={updateCharacter}>
+      <select bind:this={charSelect} on:change={updateCharacter}>
         <option value="__custom__" selected>custom</option>
         {#each Object.keys(RoACharStats) as charName}
           <option value={charName}>{charName}</option>
@@ -58,10 +76,24 @@
 </div>
 
 <script>
-  import { targetAttributes, showHitboxes, showAngle, showGuideline, guidelineLength, selectedHitbox } from '../../store/renderOptions.js';
+  import {
+    targetAttributes,
+    showHitboxes,
+    showAngle,
+    showGuideline,
+    guidelineLength,
+    selectedHitbox,
+    showHurtbox,
+    hurtboxOpacity,
+    debugTypes,
+    debugTypeIndex
+  } from '../../store/renderOptions.js';
+	import getData from '../../util/emulation/extractData';
   import RoACharStats from '../../util/RoACharStats.js';
 
   let charSelect;
+
+  const refreshTimeline = () => getData('moveEditor');
 
   const updateCharacter = (evt) => {
     if (evt.target.value !== '__custom__') targetAttributes.setCharacter(evt.target.value)

@@ -81,10 +81,21 @@ export default class RoABoxController implements vscode.Disposable {
   public openInRoABox(args: vscode.Uri) {
     if (!args.fsPath.endsWith('.gml') || this.panel === undefined) { throw new Error("not a gml file!"); }
 
-    const fileBuffer = readFileSync(args.fsPath);
+    let contentPath;
+    let debugContentPath;
+    if (args.path.substring(0, args.path.lastIndexOf('/')).endsWith('extension')) {
+      debugContentPath = args.fsPath;
+      contentPath = args.fsPath.replace('extension', 'attacks');
+      console.log(contentPath);
+    } else {
+      contentPath = args.fsPath;
+    }
+
+    const fileBuffer = readFileSync(contentPath);
     this.panel.webview.postMessage({
       command: 'openFile',
       file: {
+        debugContent: debugContentPath ? readFileSync(debugContentPath).toString('base64') : undefined,
         content: fileBuffer.toString('base64'),
         name: args.path.substring(args.path.lastIndexOf('/'))
       }

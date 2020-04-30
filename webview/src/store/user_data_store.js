@@ -3,6 +3,9 @@ import { writable } from 'svelte/store';
 export const moveSource = writable('');
 window['move_source'] = moveSource;
 
+export const debugSource = writable('');
+window['debug_source'] = debugSource;
+
 export const loadSource = writable('');
 window['load_source'] = loadSource;
 

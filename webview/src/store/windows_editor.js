@@ -20,13 +20,13 @@ export const windows = derived(
     if ($timeline.length === 0) return [];
     const out = [];
     let currSectionLength = 0;
-    console.log($timeline);
     let lastWindow = $timeline[0].winIdx;
-    for (const frame of $timeline) {
+    for (const [idx, frame] of $timeline.entries()) {
       currSectionLength ++;
       if (frame.winIdx !== lastWindow) {
+        const lastFrame = $timeline[idx - 1];
         out.push({
-          name: lastWindow,
+          name: (lastFrame._name) ? lastFrame._name : lastWindow + 1,
           color: randColor(),
           frameCount: currSectionLength
         })
@@ -34,8 +34,9 @@ export const windows = derived(
         currSectionLength = 0;
       }
     }
+    const lastName = $timeline[$timeline.length - 1]._name;
     out.push({
-      name: lastWindow,
+      name: lastName ? lastName : lastWindow + 1,
       color: randColor(),
       frameCount: currSectionLength
     });

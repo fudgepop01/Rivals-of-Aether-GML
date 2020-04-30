@@ -52,13 +52,14 @@
 				switch (data.command) {
 					case 'openFile': {
 						const b64f = data.file;
-						const f = {...b64f, content: atob(b64f.content)}
+						const f = {...b64f, content: atob(b64f.content), debugContent: (b64f.debugContent) ? atob(b64f.debugContent) : undefined}
 						if (f.name.endsWith('init.gml')) window['init_source'].set(f.content);
 						else if (f.name.endsWith('load.gml')) window['load_source'].set(f.content);
 						else {
-							window['current_frame'].set(0);
 							window['selected_window'].set(0);
 							window['move_source'].set(f.content);
+							if (f.debugContent) window['debug_source'].set(f.debugContent);
+							else window['debug_source'].set('');
 						}
 						break;
 					}
