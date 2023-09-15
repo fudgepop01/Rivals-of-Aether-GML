@@ -38,10 +38,13 @@ export const targetAttributes = targetAttributeFactory();
 export const showHitboxes = writable(true);
 export const showAngle = writable(true);
 export const showGuideline = writable(true);
+export const showWhifflag = writable(true);
 export const guidelineLength = writable(30);
 export const selectedHitbox = writable({_idx: -1, _myFrame: -1});
 export const showHurtbox = writable(false);
 export const hurtboxOpacity = writable(1);
 
-export const debugTypes = writable([]);
-export const debugTypeIndex = writable(0);
+export const displayModes = writable([]);
+export const displayModeIndex = writable(0);
+
+export const hiddenHitboxes = writable([]);

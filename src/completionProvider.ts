@@ -11,20 +11,22 @@ export const NTTRoAProvider: vscode.CompletionItemProvider = {
     context: vscode.CompletionContext): vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList>
   {
 
-    return compiledList.map(({label, kind, documentation, insertText, insertTextFormat}): vscode.CompletionItem => {
+    return compiledList.map(({label, kind, documentation, insertText, insertTextFormat, filterText}): vscode.CompletionItem => {
       if (insertTextFormat === InsertTextFormat.Snippet) {
         return {
           label,
           kind,
           documentation: new vscode.MarkdownString(documentation as string),
-          insertText: new vscode.SnippetString(insertText)
+          insertText: new vscode.SnippetString(insertText),
+          filterText
         };
       } else {
         return {
           label,
           kind,
           documentation: new vscode.MarkdownString(documentation as string),
-          insertText: insertText
+          insertText: insertText,
+          filterText
         };
       }
     });

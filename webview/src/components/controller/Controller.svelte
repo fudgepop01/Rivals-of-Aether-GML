@@ -24,14 +24,18 @@
       <label>hurtbox opacity</label>
       <input type="number" bind:value={$hurtboxOpacity} step="0.05" max="1" min="0" >
     </div>
+    <div class="check-group">
+      <label>show whifflag?</label>
+      <input type="checkbox" bind:checked={$showWhifflag} on:change={refreshTimeline}>
+    </div>
     <div class="input-group">
       <button on:click={() => selectedHitbox.set({_idx: -1})}>clear hitbox selection</button>
     </div>
-    {#if $debugTypes.length > 0}
+    {#if $displayModes.length > 0}
       <div class="input-group">
-        <label>debug mode</label>
-        <select bind:value={$debugTypeIndex} on:change={refreshTimeline}>
-          {#each $debugTypes as mode, i}
+        <label>display mode</label>
+        <select bind:value={$displayModeIndex} on:change={refreshTimeline}>
+          {#each $displayModes as mode, i}
             <option value={i}>{mode}</option>
           {/each}
         </select>
@@ -81,12 +85,13 @@
     showHitboxes,
     showAngle,
     showGuideline,
+    showWhifflag,
     guidelineLength,
     selectedHitbox,
     showHurtbox,
     hurtboxOpacity,
-    debugTypes,
-    debugTypeIndex
+    displayModes,
+    displayModeIndex
   } from '../../store/renderOptions.js';
 	import getData from '../../util/emulation/extractData';
   import RoACharStats from '../../util/RoACharStats.js';

@@ -31,6 +31,20 @@ export default (): CompletionItem[] => {
       documentation: 'Returns the y position (top side) of the current viewport.',
       insertText: 'view_get_yview()',
       insertTextFormat: InsertTextFormat.Snippet
-    }
+    },
+    {
+      label: 'set_view_position',
+      kind: CompletionItemKind.Function,
+      documentation: 'Overrides the camera position. Use the functions view_get_xview() and view_get_yview() for the arguments if you don’t want to override them. The camera will be restricted to the edges of the stage in base game stages, but will be fully unlocked on workshop stages.',
+      insertText: 'set_view_position( ${1:x/real}, ${2:y/real} )',
+      insertTextFormat: InsertTextFormat.Snippet
+    },
+    {
+      label: 'shake_camera',
+      kind: CompletionItemKind.Function,
+      documentation: 'Sets the camera shake.',
+      insertText: 'shake_camera( ${1:intensity/real}, ${2:time/real} )',
+      insertTextFormat: InsertTextFormat.Snippet
+    },
   ]
 }

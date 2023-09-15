@@ -3,7 +3,7 @@ import currentItems from './currentItems';
 import constants from './constantLookup';
 
 import { get } from "svelte/store";
-import { debugTypeIndex } from '../../store/renderOptions';
+import { displayModeIndex } from '../../store/renderOptions';
 
 const LOOP_LIMIT = 100000;
 const checkInterrupt = (inst, i, [loopType,,{row, col}], gameState) => {
@@ -262,8 +262,8 @@ export const nodeTypes = (gameState) => {
     },
     FieldSet(instance, fieldName, val){
       // HOOK FOR VISUALIZER CODE INJECTION
-      if (fieldName === 'DEBUG_TYPES') {
-        gameState.instances.self.fields['DEBUG_TYPE'] = getData(val).split(',')[get(debugTypeIndex)];
+      if (fieldName === '__DISPLAY_MODES') {
+        gameState.instances.self.fields['__DISPLAY_MODE'] = getData(val).split(',')[get(displayModeIndex) - 1];
       }
 
       const instVal = getData(instance);

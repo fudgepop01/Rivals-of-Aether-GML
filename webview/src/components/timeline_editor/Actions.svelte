@@ -24,7 +24,7 @@
     if (playing) {
       requestAnimationFrame(loop);
       fpsMonitor++;
-      if (fpsMonitor >= (1 / $playSpeed)) {
+      if (fpsMonitor >= (1 / ($playSpeed * 0.5))) {
         fpsMonitor = 0;
         if ($currentFrame + 1 >= $frameCount) {
           currentFrame.set(0);

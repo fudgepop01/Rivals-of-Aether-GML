@@ -12,6 +12,9 @@
       <clipPath id="spriteClip" clipPathUnits="objectBoundingBox">
         <rect x="{(spr.idx % spr.frameCount) / spr.frameCount}" y="0" width="{1 / spr.frameCount}" height="1" />
       </clipPath>
+      <clipPath id="hurtClip" clipPathUnits="objectBoundingBox">
+        <rect x="{(hurt.idx % hurt.frameCount) / hurt.frameCount}" y="0" width="{1 / hurt.frameCount}" height="1" />
+      </clipPath>
       {#each hitboxData as hitbox, i}
         {#if (hitbox.type === 2 && hitbox.imageData !== undefined)}
           <clipPath id="projClip-{i}" clipPathUnits="objectBoundingBox">
@@ -45,10 +48,10 @@
     />
     <!-- image -->
     <image
-      x="{0 - spr.offsets.x - ((spr.idx % spr.frameCount) / spr.frameCount) * spr.data.width + frameData.xOffset}"
+      x="{0 - spr.offsets.x - ((spr.idx % spr.frameCount) / spr.frameCount) * spr.imgMeta.width + frameData.xOffset}"
       y="{0 - spr.offsets.y + frameData.yOffset}"
-      width="{spr.data.width}"
-      height="{spr.data.height}"
+      width="{spr.imgMeta.width}"
+      height="{spr.imgMeta.height}"
       xlink:href="{spr.data.src}"
       clip-path="url(#spriteClip)"
     />
@@ -60,7 +63,7 @@
         width="{hurt.data.width}"
         height="{hurt.data.height}"
         xlink:href="{hurt.data.src}"
-        clip-path="url(#spriteClip)"
+        clip-path="url(#hurtClip)"
         style="opacity: {$hurtboxOpacity}"
       />
     {/if}
@@ -68,54 +71,54 @@
     {#if $showHitboxes}
       {#each hitboxData as hitbox, i}
         <!-- hitboxes -->
-        {#if (hitbox.type === 1 || hitbox.imageData === undefined)}
-          <!-- regular hitboxes -->
-          {#if hitbox.shape === 0}
-            <ellipse
-              on:click={() => selectedHitbox.set(hitbox)}
-              class="hitbox"
-              data-index={i}
-              cx="{hitbox.xPos + hitbox._xOffset}"
-              cy="{hitbox.yPos + hitbox._yOffset}"
-              rx="{hitbox.width / 2}"
-              ry="{hitbox.height / 2}"
-              fill="{hitbox === selectedHitbox ? '#cc08' : '#c008'}"
-            />
-          {:else if hitbox.shape === 1}
-            <rect
-              on:click={() => selectedHitbox.set(hitbox)}
-              class="hitbox"
-              data-index={i}
-              x="{hitbox.xPos + hitbox._xOffset}"
-              y="{hitbox.yPos + hitbox._yOffset}"
-              width="{hitbox.width}"
-              height="{hitbox.height}"
-              fill="{hitbox === selectedHitbox ? '#cc08' : '#c008'}"
-            />
-          {:else}
-            <rect
-              on:click={() => selectedHitbox.set(hitbox)}
-              class="hitbox"
-              data-index={i}
-              x="{hitbox.xPos + hitbox._xOffset}"
-              y="{hitbox.yPos + hitbox._yOffset}"
-              rx="{hitbox.width * 0.25}"
-              ry="{hitbox.height * 0.25}"
-              width="{hitbox.width}"
-              height="{hitbox.height}"
-              fill="{hitbox === selectedHitbox ? '#cc08' : '#c008'}"
-            />
-          {/if}
-        {:else}
-          <!-- projectiles -->
+        {#if (hitbox.type !== 1 && hitbox.imageData !== undefined)}
+          <!-- projectile sprites -->
           <image
             on:click={() => selectedHitbox.set(hitbox)}
-            x="{hitbox.xPos + hitbox._xOffset - ((hitbox.imageIdx % hitbox.imageFrameCount) / hitbox.imageFrameCount) * hitbox.imageData.width}"
-            y="{hitbox.yPos + hitbox._yOffset}"
+            x="{hitbox.xPos + hitbox._xOffset - hitbox.imageOffsetX - ((hitbox.imageIdx % hitbox.imageFrameCount) / hitbox.imageFrameCount) * hitbox.imageData.width}"
+            y="{hitbox.yPos + hitbox._yOffset - hitbox.imageOffsetY}"
             width="{hitbox.imageData.width}"
             height="{hitbox.imageData.height}"
             xlink:href="{hitbox.imageData.src}"
             clip-path="url(#projClip-{i})"
+            preserveAspectRatio="none"
+          />
+        {/if}
+        <!-- regular hitboxes -->
+        {#if hitbox.shape === 0}
+          <ellipse
+            on:click={() => selectedHitbox.set(hitbox)}
+            class="hitbox"
+            data-index={i}
+            cx="{hitbox.xPos + hitbox._xOffset}"
+            cy="{hitbox.yPos + hitbox._yOffset}"
+            rx="{hitbox.width / 2}"
+            ry="{hitbox.height / 2}"
+            fill="{hitbox === selectedHitbox ? '#cc08' : '#c008'}"
+          />
+        {:else if hitbox.shape === 1}
+          <rect
+            on:click={() => selectedHitbox.set(hitbox)}
+            class="hitbox"
+            data-index={i}
+            x="{hitbox.xPos + hitbox._xOffset - hitbox.width * 0.5}"
+            y="{hitbox.yPos + hitbox._yOffset - hitbox.height * 0.5}"
+            width="{hitbox.width}"
+            height="{hitbox.height}"
+            fill="{hitbox === selectedHitbox ? '#cc08' : '#c008'}"
+          />
+        {:else}
+          <rect
+            on:click={() => selectedHitbox.set(hitbox)}
+            class="hitbox"
+            data-index={i}
+            x="{hitbox.xPos + hitbox._xOffset - hitbox.width * 0.5}"
+            y="{hitbox.yPos + hitbox._yOffset - hitbox.height * 0.5}"
+            rx="{hitbox.width * 0.25}"
+            ry="{hitbox.height * 0.25}"
+            width="{hitbox.width}"
+            height="{hitbox.height}"
+            fill="{hitbox === selectedHitbox ? '#cc08' : '#c008'}"
           />
         {/if}
       {/each}
@@ -124,13 +127,13 @@
     {#if $showAngle}
       {#each hitboxData as hitbox}
         <path
-          d="M {hitbox.xPos + hitbox._xOffset + (hitbox.imageOffsetX || 0)/2} {hitbox.yPos + hitbox._yOffset + (hitbox.imageOffsetY || 0)/2} l {Math.cos(hitbox.angleRad) * hitbox.knockback * 5} {Math.sin(hitbox.angleRad) * -1 * hitbox.knockback * 5}"
+          d="M {hitbox.xPos + hitbox._xOffset + 0} {hitbox.yPos + hitbox._yOffset + 0} l {Math.cos(hitbox.angleRad) * hitbox.knockback * 5} {Math.sin(hitbox.angleRad) * -1 * hitbox.knockback * 5}"
           stroke-width="5"
           stroke="#000"
           marker-end="url(#head)"
         />
         <path
-          d="M {hitbox.xPos + hitbox._xOffset + (hitbox.imageOffsetX || 0)/2} {hitbox.yPos + hitbox._yOffset + (hitbox.imageOffsetY || 0)/2} l {Math.cos(hitbox.angleRad) * (hitbox.knockback + 1) * 5} {Math.sin(hitbox.angleRad) * -1 * (hitbox.knockback + 1) * 5}"
+          d="M {hitbox.xPos + hitbox._xOffset + 0} {hitbox.yPos + hitbox._yOffset + 0} l {Math.cos(hitbox.angleRad) * (hitbox.knockback + 1) * 5} {Math.sin(hitbox.angleRad) * -1 * (hitbox.knockback + 1) * 5}"
           stroke-width="2"
           stroke="#fff"
         />
@@ -187,7 +190,12 @@
     idx: undefined,
     offsets: undefined,
     frameCount: undefined,
-    frameWidth: undefined
+    frameWidth: undefined,
+    smallSprite: undefined,
+    imgMeta: {
+      width: undefined,
+      height: undefined
+    },
   };
   let hurt = {
     data: undefined,
@@ -219,8 +227,8 @@
   const calcKnockbackPaths = (hitbox, props) => {
     const hitstun = Math.round(calcHitstun(hitbox, props));
     let {x: hsp, y: vsp} = calcKnockback(hitbox, props);
-    let x = hitbox.xPos + hitbox._xOffset + (hitbox.imageOffsetX || 0) / 2;
-    let y = hitbox.yPos + hitbox._yOffset + (hitbox.imageOffsetY || 0) / 2;
+    let x = hitbox.xPos + hitbox._xOffset;
+    let y = hitbox.yPos + hitbox._yOffset;
     let hitstunPath = `M ${x} ${y} `
     let fallPath = ``;
     for (let i = 0; i < $guidelineLength; i++) {
@@ -253,12 +261,22 @@
     frameData = $timeline[$currentFrame];
     hitboxData = frameData.hitboxes.map((hb) => getFullHitboxData(hb));
     let imgObj = $spriteData[frameData.sprite];
-
+    
     spr.data = imgObj.img || $spriteData['null_sprite.png'].img;
+    spr.imgMeta.width = spr.data.width;
+    spr.imgMeta.height = spr.data.height;
+    
     spr.frameCount = imgObj.frameCount;
     spr.offsets = {x: imgObj.xoff, y: imgObj.yoff};
     spr.idx = frameData.spriteFrame(spr.frameCount);
     spr.frameWidth = spr.data.width / imgObj.frameCount;
+
+    if (frameData.smallSprites) {
+      spr.imgMeta.width *= 2;
+      spr.imgMeta.height *= 2;
+      spr.offsets.x *= 2;
+      spr.offsets.y *= 2;
+    }
 
     imgObj = $spriteData[frameData.hbSprite];
     if (imgObj !== undefined) {
@@ -266,7 +284,7 @@
       hurt.frameCount = imgObj.frameCount;
       hurt.offsets = spr.offsets; // in-game they're auto-obtained from the main sprite as well
       hurt.idx = frameData.spriteFrame(hurt.frameCount);
-      hurt.frameWidth = hurt.data.width / imgObj.frameCount;
+      hurt.frameWidth = hurt.data.width / hurt.frameCount;
     } else {
       hurt.data = undefined;
     }
@@ -287,6 +305,10 @@
       }
       return hb;
     });
+
+    console.log("owo");
+    console.log(frameData);
+    console.log(hitboxData);
   }
 
   const resizeTracker = () => {

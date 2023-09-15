@@ -1,16 +1,79 @@
+## Overview Video
+
+https://www.youtube.com/watch?v=DS2QaEW_BiA
+
 ## Features
 
-- autocompletion for RoA-specific consts, variables, and functions
-- syntax highlighting for RoA-specific consts, variables, and functions
-- a (basic) visualizer for RoA workshop moves.
+### Autocompletion for RoA-specific consts, variables, and functions
 
-that's about it (for now)
+![demonstration of autocompletion result](./resources/autocompletion_result.png)
+
+### Syntax highlighting for RoA-specific consts, variables, and functions
+
+![demonstration of syntax highlighting](./resources/syntax_highlighting.png)
+
+### A visualizer for RoA workshop moves.
+
+Pull up the command palette with `Ctrl+Shift+P` and select "Open RoABox"
+
+![visualizer demonstration](./resources/visualizer.png)
+
+**There is even projectile support!!**
+
+![projectile visualization](./resources/projectile_visualizer.png)
+
+### special visualizer variables!
+
+Use special variables to directly interact with it! Want to simulate a move with repeating windows? Now you can!
+
+```gml
+__DISPLAY_MODES = "long charge,hide hitbox 2";
+switch(__DISPLAY_MODE) {
+  case "long charge":
+    __WINDOW_SEQUENCE = "1,2x5,3";
+    break;
+  case "hide hitbox 2":
+    __HIDDEN_HITBOXES = "2";
+    break;
+}
+```
+
+This will create a display mode on the editor:
+
+![a demonstration of the result](./resources/display_mode.png)
 
 ## Known Issues
 
-none yet(?)
+none yet!~
+
+## Future Ideas
+
+- possible simulation of a small amount of gml code, allowing for `attack_update.gml`
 
 ## Release Notes
+
+### 2.0.0
+
+- added the ability to directly affect the move visualizer with special variables
+- added a toggle to simulate hitlag
+- added all the functions and macros that have been missing since 2019
+
+fixed:
+- animations playing at twice the speed they should
+- projectile behavior
+- hurtbox display
+
+### 1.4.0
+
+overview
+
+features:
+- added debug scripts
+- added support for projectiles
+- added hurtbox display
+
+Quality of Life:
+- default framecount of trajectory line is now 30
 
 ### 1.3.0
 

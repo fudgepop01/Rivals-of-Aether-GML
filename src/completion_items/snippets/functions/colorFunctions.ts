@@ -26,6 +26,13 @@ export default (): CompletionItem[] => {
       insertTextFormat: InsertTextFormat.Snippet
     },
     {
+      label: 'get_color_profile_slot_range',
+      kind: CompletionItemKind.Function,
+      documentation: '',
+      insertText: 'get_color_profile_slot_range( ${1:color_slot/real}, ${2:H/real}, ${3:S/real}, ${4:V/real} )',
+      insertTextFormat: InsertTextFormat.Snippet
+    },
+    {
       label: 'set_character_color_slot',
       kind: CompletionItemKind.Function,
       documentation: '',

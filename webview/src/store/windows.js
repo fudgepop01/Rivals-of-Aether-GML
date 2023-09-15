@@ -67,12 +67,12 @@ const createPlaySpeed = () => {
     subscribe,
     increase() {
       update(n => {
-        return (n === 0.25) ? 0.5 : 1;
+        return (n * 2 < 2) ? n * 2 : 2;
       })
     },
     decrease() {
       update (n => {
-        return (n === 1) ? 0.5 : 0.25;
+        return (n * 0.5 > 0.25) ? n * 0.5 : 0.25;
       })
     }
   }

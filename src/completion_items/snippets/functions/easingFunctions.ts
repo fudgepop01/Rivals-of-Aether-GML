@@ -159,6 +159,27 @@ export default (): CompletionItem[] => {
       insertTextFormat: InsertTextFormat.Snippet
     },
     {
+      label: 'ease_quintIn',
+      kind: CompletionItemKind.Function,
+      documentation: '',
+      insertText: 'ease_quintIn( ${1:start}, ${2:end}, ${3:current_time}, ${4:total_time} )',
+      insertTextFormat: InsertTextFormat.Snippet
+    },
+    {
+      label: 'ease_quintOut',
+      kind: CompletionItemKind.Function,
+      documentation: '',
+      insertText: 'ease_quintOut( ${1:start}, ${2:end}, ${3:current_time}, ${4:total_time} )',
+      insertTextFormat: InsertTextFormat.Snippet
+    },
+    {
+      label: 'ease_quintInOut',
+      kind: CompletionItemKind.Function,
+      documentation: '',
+      insertText: 'ease_quintInOut( ${1:start}, ${2:end}, ${3:current_time}, ${4:total_time} )',
+      insertTextFormat: InsertTextFormat.Snippet
+    },
+    {
       label: 'ease_sineIn',
       kind: CompletionItemKind.Function,
       documentation: '',

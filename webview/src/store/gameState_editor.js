@@ -1,10 +1,18 @@
 import { writable, get } from 'svelte/store';
 import { spriteData } from './user_data_store'
+import { hiddenHitboxes as hiddenHBs, showWhifflag } from './renderOptions';
 
 const calcFrames = (data) => {
   const sprites = get(spriteData);
 
   console.log(data);
+
+  const $showWhifflag = get(showWhifflag);
+  for (const win of Object.values(data.windows)) {
+    if ($showWhifflag && win.AG_WINDOW_HAS_WHIFFLAG) {
+      win.AG_WINDOW_LENGTH *= 1.5;
+    }
+  }
 
   let fullFrames = [];
 
@@ -20,11 +28,15 @@ const calcFrames = (data) => {
     if (fullSfx === undefined) return undefined;
     return fullSfx.substring(11, fullSfx.length - 2);
   }
-
   console.log(data);
+  const hiddenHitboxes = get(hiddenHBs);
   const frameCount = Object.values(data.windows).reduce((acc, currWin) => acc + currWin.AG_WINDOW_LENGTH , 0);
   const hitboxGenerators =
-    Object.values(data.hitboxes).map((hb, idx) => {
+    Object.entries(data.hitboxes).filter(([idx, hb]) => {
+      console.log("hiddenHBs", hiddenHitboxes)
+      console.log("currIdx", idx);
+      return !hiddenHitboxes.includes(idx) 
+    }).map(([hbIdx, hb], idx) => {
       return {
         lifetime: hb.HG_LIFETIME || 0,
         winNum: hb.HG_WINDOW || 0,
@@ -78,7 +90,7 @@ const calcFrames = (data) => {
         behavior: hb.HG_PROJECTILE_GROUND_BEHAVIOR || 0,
         animSpeed: hb.HG_PROJECTILE_ANIM_SPEED || 0,
         sprite: (hb.HG_PROJECTILE_SPRITE) ? hb.HG_PROJECTILE_SPRITE.substring(12, hb.HG_PROJECTILE_SPRITE.length - 2) : 0,
-        hitbox: (hb.HG_PROJECTILE_MASK) ? hb.HG_PROJECTILE_MASK.substring(12, hb.HG_PROJECTILE_MASK.length - 2) : 0,
+        hitbox: (hb.HG_PROJECTILE_MASK && hb.HG_PROJECTILE_MASK !== -1) ? hb.HG_PROJECTILE_MASK.substring(12, hb.HG_PROJECTILE_MASK.length - 2) : 0,
         _xOffset: 0,
         _yOffset: 0,
         spriteFrame(spriteSheetFrameCount) {
@@ -95,6 +107,11 @@ const calcFrames = (data) => {
   for (let i = 0; i < frameCount; i++) {
     const thisFrame = {};
     const {winStart, win} = getWindowAtFrame(i);
+    if (i === 0) {
+      thisFrame.xOffset = 0;
+      thisFrame.yOffset = 0;
+    }
+
     thisFrame.winIdx = Object.values(data.windows).indexOf(win);
     thisFrame.sprite = data.AG_SPRITE.substring(12, data.AG_SPRITE.length - 2);
     thisFrame.hbSprite = data.AG_HURTBOX_SPRITE.substring(12, data.AG_HURTBOX_SPRITE.length - 2);
@@ -141,6 +158,7 @@ const calcFrames = (data) => {
     yOffset = Math.min(0, yOffset + yvel);
     if (yOffset === 0) yvel = 0;
 
+    thisFrame.smallSprites = data.vars.small_sprites;
     thisFrame.xOffset = xOffset;
     thisFrame.yOffset = yOffset;
 
@@ -168,6 +186,11 @@ const calcFrames = (data) => {
         i--;
         continue;
       }
+      // if (hitbox._myFrame === 0) {
+      //   hitbox._xOffset = thisFrame.xOffset;
+      //   hitbox._yOffset = thisFrame.yOffset;
+      // }
+
       // update offsets to standard hitboxes
       if (hitbox.type === 1) {
         hitbox._xOffset = xOffset;
@@ -208,10 +231,10 @@ const calcFrames = (data) => {
         hitbox._myFrame = 1;
         if (hitbox.type === 2) {
           let imgData = sprites[hitbox.sprite]
-          if (imgData) {
-            hitbox._xOffset -= imgData.xoff;
-            hitbox._yOffset -= imgData.yoff;
-          }
+          // if (imgData) {
+          //   hitbox._xOffset -= imgData.xoff;
+          //   hitbox._yOffset -= imgData.yoff;
+          // }
         }
         activeHitboxes.push(hitbox);
       }
@@ -227,13 +250,6 @@ const calcFrames = (data) => {
     });
 
     fullFrames.push(thisFrame);
-
-    // TODO: handle whifflag
-    // if (i - winStart === win.AG_WINDOW_LENGTH && win.AG_WINDOW_HAS_WHIFFLAG) {
-    //   const cloned = JSON.parse(JSON.stringify(thisFrame));
-    //   cloned.isWhifflag = true;
-    //   fullFrames.push(...(new Array(Math.floor(win.AG_WINDOW_LENGTH)).fill(cloned)));
-    // }
   }
 
   return fullFrames;

@@ -90,6 +90,27 @@ export default (): CompletionItem[] => {
       insertTextFormat: InsertTextFormat.Snippet
     },
     {
+      label: 'get_kb_formula',
+      kind: CompletionItemKind.Function,
+      documentation: 'Returns the resulting amount of knockback a player would get if they were hit with the specified stats. Usually used in tandem with get_hitbox_angle( hitbox_id )',
+      insertText: 'get_kb_formula( ${1:player_damage/real}, ${2:player_kb_adj/real}, ${3:kb_mult/real}, ${4:hbox_damage/real}, ${5:hbox_bkb/real}, ${6:hbox_kb_scale/real} )',
+      insertTextFormat: InsertTextFormat.Snippet
+    },
+    {
+      label: 'get_hitstun_formula',
+      kind: CompletionItemKind.Function,
+      documentation: 'Returns the resulting amount of hitstun a player would get if they were hit with the specified stats. Note that hitstun is not hitstop; Hitstun is how long the player remains inactionable after being hit.',
+      insertText: 'get_hitstun_formula( ${1:player_damage/real}, ${2:player_kb_adj/real}, ${3:kb_mult/real}, ${4:hbox_damage/real}, ${5:hbox_bkb/real}, ${6:hbox_kb_scale/real} )',
+      insertTextFormat: InsertTextFormat.Snippet
+    },
+    {
+      label: 'get_hitstop_formula',
+      kind: CompletionItemKind.Function,
+      documentation: 'Returns the resulting amount of hitpause a player would get if they were hit with the specified stats. Note that hitpause is not hitstun; hitpause is the freezeframes immediately after getting hit.',
+      insertText: 'get_hitstop_formula( ${1:player_damage/real}, ${2:player_kb_adj/real}, ${3:hitbox_base_hitstop/real}, ${4:hitbox_hitstop_scale/real}, ${5:hitbox_extra_hitpause/real} )',
+      insertTextFormat: InsertTextFormat.Snippet
+    },
+    {
       label: 'destroy_hitboxes',
       kind: CompletionItemKind.Function,
       documentation: 'Destroys all physical hitboxes for the character.',
